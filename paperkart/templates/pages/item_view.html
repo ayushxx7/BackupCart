@@ -1,0 +1,11 @@
+{% extends "templates/web.html" %}
+
+{% block content %}
+	Hello
+	<h3>Items</h3>
+	<ul>
+	{% for itm in items %}
+		<li>{{ itm["item_name"] }}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}

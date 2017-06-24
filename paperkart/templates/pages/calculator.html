@@ -1,0 +1,325 @@
+{% extends "templates/web.html" %}
+
+{% block content %}	
+
+<script type="text/javascript">
+	
+$(function() {
+        $('#optionselector').change(function(){
+            $('.calcoptions').hide();
+            $('#' + $(this).val()).show();
+        });
+    });
+	
+
+function calculateWeightInInches() {
+           var Length = document.getElementById("txt_weight").value;
+           var width = document.getElementById("txt_width").value;
+           var GSM = document.getElementById("txt_GSM").value;
+           var calculate = (Length * width * GSM) / 3100;
+           var result = document.getElementById("txt_Result");
+           
+           // if (Length < 0)
+           // {
+           // 	document.getElementById('err').innerHTML = 'Incorrect Length!';
+           // }
+
+
+           if(calculate < 0 || width > 300 || width < 0.393701 || GSM < 5 || GSM > 800)
+           {
+           	result.value = 0;
+           }
+
+           else
+           {	
+           	result.value = calculate.toFixed(2);
+		   }       
+       }
+
+
+
+       function calculateWeightInCm() {
+           var Length = document.getElementById("txt_Lengthincm").value;
+           var width = document.getElementById("txt_widthincm").value;
+           var GSM = document.getElementById("txt_gsm2").value;
+           var calculate = (Length * width * GSM) / 20000;
+           var result = document.getElementById("txt_Result2");
+           
+           if(calculate < 0 || width > 762 || width < 0.393701 || GSM < 5 || GSM > 800)
+           {
+           	result.value = 0;
+           }
+
+           else
+           {	
+           	result.value = calculate.toFixed(2);
+		   }
+       }
+       function calculateGsmInInches() {
+           var Weight =document.getElementById("txt_WeightPerReam").value;
+           var Length =document.getElementById("txt_Lengthininches2").value;
+           var Width =document.getElementById("txt_widthininches2").value;
+           var calculate = (Weight * 3100) / (Length * Width);
+           var result = document.getElementById("txt_gsm3");
+           result.value = calculate.toFixed(2);
+     //       if(calculate < 0 || width > 300 || width < 1 || GSM < 5 || GSM > 800)
+     //       {
+     //       	result.value = 0;
+     //       }
+
+     //       else
+     //       {	
+     //       	result.value = calculate.toFixed(2);
+		   // }
+       }
+       function calculateGsmInCm() {
+           var Weight =document.getElementById("txt_WeightPerReamCm").value;
+           var Length =document.getElementById("txt_LengthOFReamCm").value;
+           var Width = document.getElementById("txt_WidthOfReamCm").value;
+           var calculate = (Weight * 20000) / (Length * Width);
+           var result = document.getElementById("txt_Result4");
+           result.value = calculate.toFixed(2);	
+
+     //       if(calculate < 0 || Width > 762 || width < 1)
+     //       {
+     //       	result.value = 0;
+     //       }
+
+     //       else
+     //       {	
+     //       	result.value = calculate.toFixed(2);
+		   // }
+       }
+       function calculateTotalWeight() {
+           var GSM = document.getElementById("txt_gsm5").value;
+           var Length = document.getElementById("txt_LengthReelM").value;
+           var Width = document.getElementById("txt_WidthReelCm").value;
+           var calculate = GSM * Width * Length / 100000;
+           var result = document.getElementById("Txt_Result5");
+           result.value = calculate.toFixed(2);
+     //       if(calculate < 0 || width > 762 || width < 1 || GSM < 5 || GSM > 800)
+     //       {
+     //       	result.value = 0;
+     //       }
+
+     //       else
+     //       {	
+     //       	result.value = calculate.toFixed(2);
+		   // }
+       }
+       function calculateLengthInMeter() {
+           var GSM = document.getElementById("txt_gsm6").value;
+           var Weight =document.getElementById("txt_ReamWeightInKg").value;
+           var Width = document.getElementById("txt_ReamWidthInCm").value;
+           var calculate = (Weight * 100000) / GSM * Width;
+           var result = document.getElementById("txt_LenghOfReam");
+           result.value = calculate.toFixed(2);
+     //       if(calculate < 0 || width > 762 || width < 1 || GSM < 5 || GSM > 800)
+     //       {
+     //       	result.value = 0;
+     //       }
+
+     //       else
+     //       {	
+     //       	result.value = calculate.toFixed(2);
+		   // }
+       }
+</script>
+
+<div class="container">
+ <div class="container-fluid"> 
+ <div class="jumbotron"><h1>Paper Calculator</h1></div>
+ 
+  	<select class="form-control" id='optionselector'>
+  
+  		<option disabled="disabled" selected="selected">Select Calculation</option>
+  
+  			<optgroup label="Find Weight(in KGs) for 500 sheets">
+    			<option value="case_one">inches/Gram-Weight</option>
+    			<option value="case_two">centimeters/Gram-weight</option>
+  		</optgroup>
+  
+  			<optgroup label="Find Gram-Weight of 500 sheets">
+    			<option value="case_three">inches/Weight(KG)</option>
+    			<option value="case_four">cms/Weight(KG)</option>
+  			</optgroup>
+  
+  			<optgroup label="Find Total Weight(in KGs) of a reel">
+    			<option value="case_five">GSM/Width(cm)/Length(m)</option>
+	     	</optgroup>
+  
+			<optgroup label="Find length in meter of a reel">
+    			<option value="case_six">Weight(KG)/GSM/Width(cm)
+  			</option>
+
+	</select> 
+ 
+ <div class="container-fluid">
+ 	
+ 	<div id = "case_one"  class="calcoptions sizemod">
+ 
+ 	<h5>1. To find the weight (in <b>Kilograms</b>) of a ream containing 500 sheets of a given size in <b>inches</b> and <b>Gram-Weight.</b></h5> 
+
+ 	<br>    
+	
+	Length: <input type="number" step="0.01" name="length_in" id="txt_weight" placeholder="Length(inch)" min="0" onkeyup="calculateWeightInInches();">
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" step="0.01" name="width_in" id="txt_width" placeholder="Width(inch)" min="0" max='300' onkeyup="calculateWeightInInches();">
+	<br><br>
+
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" min="5" max="800" step="0.01" name="length_in" id="txt_GSM" placeholder="GSM" onkeyup="calculateWeightInInches();">
+	<br><br>
+
+	Weight: <input type="number" step = "0.01" name="Weight_Kg" id = "txt_Result" readonly="readonly">
+	<br><br>
+	</div>
+	
+	<div id = "case_two"  class="calcoptions sizemod">
+ 
+ 	<h5>2. To find the weight (in <b>kilograms</b>) of a ream containering 500 
+sheets of a given size in <b>centimeters</b> and <b>gram-weight</b>.</h5> 
+
+ 	<br>    
+	
+	Length: <input type="number" step="0.01" min = "0" name="length_in" id="txt_Lengthincm" placeholder="Length(cm)" onkeyup="calculateWeightInCm()" >
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" min = "1" max="762" step="0.01" name="width_in" id="txt_widthincm" placeholder="Width(cm)" onkeyup="calculateWeightInCm()">	
+	<br><br>
+
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" min="5" max="800" step="0.01" name="length_in" id="txt_gsm2" placeholder="GSM" onkeyup="calculateWeightInCm()">
+	<br><br>
+
+	Weight: <input type="number" step = "0.01" name="Weight_Kg" id = "txt_Result2"readonly="readonly"/>
+	<br><br>
+	</div>
+	
+	<div id = "case_three"  class="calcoptions sizemod">
+ 
+ 	<h5>3. To find the gram-weight of a ream containing 500 sheets of a given size in <b>inches</b> and weight (in <b>kilograms</b>)</h5> 
+
+ 	<br>    
+	
+	Weight: <input type="number" step="0.01" name="length_in" id="txt_WeightPerReam" placeholder="Weight(KG) per ream" min="0" onkeyup="calculateGsmInInches();">
+	<br><br>
+
+	Length: <input type="number" step="0.01" min = "0" name="width_in" id="txt_Lengthininches2" placeholder="Length(inches)" onkeyup="calculateGsmInInches();">
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" min="0" max='300' step="0.01" name="length_in" id="txt_widthininches2" placeholder="Width(inches)" onkeyup="calculateGsmInInches();">
+	<br><br>
+
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" step = "0.01" name="Weight_Kg" min="5" max="800" id = "txt_gsm3"  min="5" max="800" readonly="readonly">
+	<br><br>
+	</div>
+	
+
+
+	<div id = "case_four"  class="calcoptions sizemod">
+ 
+ 	<h5>4. To find the gram-weight of a ream containing 500 sheets of a given size in 
+<b>centimeters</b> and weight (in <b>kilograms</b>).</h5> 
+
+ 	<br>    
+	
+	Weight: <input type="number" step="0.01" name="length_in" id="txt_WeightPerReamCm" placeholder="Weight(KG) per ream" min="0" onkeyup="calculateGsmInCm();">
+	<br><br>
+
+	Length: <input type="number" step="0.01" name="width_in" id="txt_LengthOFReamCm" placeholder="Length(cm)" min="0" onkeyup="calculateGsmInCm();">
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" step="0.01" name="length_in" id="txt_WidthOfReamCm" placeholder="Width(cm)" min = "1" max="762" onkeyup="calculateGsmInCm();">
+	<br><br>
+
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" step = "0.01" name="Weight_Kg" id = "txt_Result4" readonly="readonly"  min="5" max="800">
+	<br><br>
+	</div>
+	
+
+
+	<div id = "case_five"  class="calcoptions sizemod">
+ 
+ 	<h5>5. To find the total weight (in <b>kilograms</b>) of a reel of a given size, length and gram-weight.</h5> 
+
+ 	<br>    
+	
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" step="0.01" name="length_in" id="txt_gsm5"  min="5" max="800" placeholder="GSM" onkeyup="calculateTotalWeight();">
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" step="0.01" name="width_in" id="txt_WidthReelCm" placeholder="Width(cm)" min = "1" max="762" onkeyup="calculateTotalWeight();">
+	<br><br>
+
+	Length: <input type="number" step="0.01" name="length_in" id="txt_LengthReelM" placeholder="Length(m)" min = "0" onkeyup="calculateTotalWeight();">
+	<br><br>
+
+	Weight: <input type="number" step = "0.01" name="Weight_Kg" id = "Txt_Result5" readonly="readonly">
+	<br><br>
+	</div>
+
+
+
+	<div id = "case_six"  class="calcoptions sizemod">
+ 
+ 	<h5>6. To find the length in meter of a reel of a given size gram-weight and total weight (in <b>kilograms</b>).</h5> 
+
+ 	<br>    
+	
+	Weight: <input type="number" step="0.01" name="length_in" id="txt_ReamWeightInKg" placeholder="Weight of Reel(KG)" onkeyup="calculateLengthInMeter();" min="0">
+	<br><br>
+
+	GSM: &nbsp;&nbsp;&nbsp;<input type="number" step="0.01" name="width_in" id="txt_gsm6" placeholder="GSM" onkeyup="calculateLengthInMeter();" min="5" max="800">
+	<br><br>
+
+	Width: &nbsp;&nbsp;<input type="number" step="0.01" name="length_in" id="txt_ReamWidthInCm" placeholder="Width(cm)"  min = "1" max="762" onkeyup="calculateLengthInMeter();">
+	<br><br>
+
+	Length: <input type="number" step = "0.01" name="Weight_Kg" id = "txt_LenghOfReam" readonly="readonly">
+	<br><br>
+	</div>
+	
+ </div>																	
+    
+ </div>	
+</div>
+
+
+<style type="text/css">
+	::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+@media screen and (max-width: 900px) {
+  .sizemod {
+    display: none;
+
+  }
+}
+</style>
+
+
+{% endblock %}

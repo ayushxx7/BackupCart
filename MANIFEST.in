@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include paperkart *.css
+recursive-include paperkart *.csv
+recursive-include paperkart *.html
+recursive-include paperkart *.ico
+recursive-include paperkart *.js
+recursive-include paperkart *.json
+recursive-include paperkart *.md
+recursive-include paperkart *.png
+recursive-include paperkart *.py
+recursive-include paperkart *.svg
+recursive-include paperkart *.txt
+recursive-exclude paperkart *.pyc
